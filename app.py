@@ -99,25 +99,28 @@ def get_species_info(species):
     return species_info.get(species.lower(), {'description': 'Unknown species', 'characteristics': [], 'wiki_link': '#'})
 
 def main():
-    # Initialize and train model if not exists
+    st.title('Iris Flower Species Classifier ')
+    
+    # Initialize model
     model = IrisClassificationModel()
+    
+    # Try to load or train model
     try:
         model.load_model()
+        print("Loaded existing model")
     except:
         print("Training new model...")
         model.train()
         model.save_model()
-    
-    st.title('Iris Flower Species Classifier ')
+        print("Model trained and saved")
     
     # Sidebar for input
     st.sidebar.header('Enter Flower Measurements')
     
-    # Input sliders for features
-    sepal_length = st.sidebar.slider('Sepal Length (cm)', 4.0, 8.0, 5.0, 0.1)
-    sepal_width = st.sidebar.slider('Sepal Width (cm)', 2.0, 4.5, 3.0, 0.1)
-    petal_length = st.sidebar.slider('Petal Length (cm)', 1.0, 7.0, 4.0, 0.1)
-    petal_width = st.sidebar.slider('Petal Width (cm)', 0.1, 2.5, 1.0, 0.1)
+    sepal_length = st.sidebar.slider('Sepal Length (cm)', 4.0, 8.0, 5.8)
+    sepal_width = st.sidebar.slider('Sepal Width (cm)', 2.0, 4.5, 3.0)
+    petal_length = st.sidebar.slider('Petal Length (cm)', 1.0, 7.0, 4.0)
+    petal_width = st.sidebar.slider('Petal Width (cm)', 0.1, 2.5, 1.3)
     
     # Prepare features for prediction
     features = [sepal_length, sepal_width, petal_length, petal_width]
