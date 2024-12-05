@@ -35,14 +35,20 @@ jobs:
         run: |
           python -c "from model import IrisClassificationModel; model = IrisClassificationModel(); model.train(); model.save_model()"
       
-      - name: Generate static Streamlit app
+      - name: Generate static content
         run: |
-          streamlit hello > index.html
+          mkdir -p _site
+          echo "# Iris Flower Species Classifier" > _site/index.html
+          echo "" >> _site/index.html
+          echo "## About" >> _site/index.html
+          echo "This is a machine learning application for classifying Iris flower species." >> _site/index.html
+          echo "" >> _site/index.html
+          echo "[Launch Streamlit App](https://github.com/yourusername/iris-classification-app)" >> _site/index.html
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: .
+          path: _site
 
   deploy:
     environment:
