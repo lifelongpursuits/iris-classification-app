@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5;url=https://iris-classification-app.streamlit.app/" />
     <title>Iris Classification App</title>
     <style>
         body {
@@ -11,44 +12,64 @@
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
-        }
-        h1 {
-            color: #333;
             text-align: center;
         }
-        .note {
-            background-color: #f4f4f4;
-            border-left: 5px solid #007bff;
-            padding: 10px;
+        .container {
+            margin-top: 50px;
+        }
+        .redirect-message {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
             margin: 20px 0;
+        }
+        .countdown {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Iris Flower Species Classifier 🌸</h1>
-    
-    <div class="note">
-        <h2>About the Project</h2>
-        <p>This is a machine learning application that predicts Iris flower species based on flower measurements using a K-Nearest Neighbors classifier.</p>
+    <div class="container">
+        <h1>Iris Flower Species Classifier 🌸</h1>
+        
+        <div class="redirect-message">
+            <p>Redirecting to the interactive Streamlit app in <span id="countdown" class="countdown">5</span> seconds...</p>
+            <p>If you are not redirected automatically, please click the button below:</p>
+            <a href="https://iris-classification-app.streamlit.app/" class="button">Launch Interactive App</a>
+        </div>
+
+        <div>
+            <p>Want to see the source code?</p>
+            <a href="https://github.com/lifelongpursuits/iris-classification-app" class="button">View on GitHub</a>
+        </div>
     </div>
 
-    <h2>Project Features</h2>
-    <ul>
-        <li>Interactive Streamlit web application</li>
-        <li>Real-time Iris species prediction</li>
-        <li>Visualization of flower measurements</li>
-        <li>Species information and Wikipedia links</li>
-        <li>Image gallery of Iris species</li>
-    </ul>
-
-    <div class="note">
-        <h2>Running the Application</h2>
-        <p>To run the full interactive Streamlit app, please visit the GitHub repository:</p>
-        <p><a href="https://github.com/lifelongpursuits/iris-classification-app">Iris Classification App Repository</a></p>
-    </div>
-
-    <footer>
-        <p>Created using Python, Scikit-learn, and Streamlit</p>
-    </footer>
+    <script>
+        // Countdown timer
+        let seconds = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdown = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdown);
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
