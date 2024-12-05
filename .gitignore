@@ -1,0 +1,39 @@
+# Virtual environment
+venv/
+*.venv
+env/
+.env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Model files
+*.pkl
+*.joblib
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Streamlit specific
+.streamlit/
+
+# GitHub Pages
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Build artifacts
+*.log
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
