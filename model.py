@@ -8,6 +8,7 @@ from sklearn.metrics import classification_report
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 class IrisClassificationModel:
     def __init__(self):
@@ -15,6 +16,7 @@ class IrisClassificationModel:
         self.iris = load_iris()
         self.X = self.iris.data
         self.y = self.iris.target
+        self.classes = ['setosa', 'versicolor', 'virginica']
         
         # Split the data
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
@@ -28,6 +30,8 @@ class IrisClassificationModel:
         
         # Initialize the model (using KNeighborsClassifier instead of RandomForest)
         self.model = KNeighborsClassifier(n_neighbors=3)
+        self.model_path = os.path.join(os.path.dirname(__file__), 'iris_model.joblib')
+        self.scaler_path = os.path.join(os.path.dirname(__file__), 'iris_scaler.joblib')
     
     def train_model(self):
         # Train the model
@@ -73,29 +77,27 @@ class IrisClassificationModel:
         # Return the species name
         return self.iris.target_names[prediction_index]
     
-    def save_model(self, model_path='iris_model.joblib', scaler_path='iris_scaler.joblib'):
+    def save_model(self):
         """
         Save the trained model and scaler to disk
         """
-        joblib.dump(self.model, model_path)
-        joblib.dump(self.scaler, scaler_path)
-        print(f"Model saved to {model_path}")
-        print(f"Scaler saved to {scaler_path}")
+        os.makedirs(os.path.dirname(self.model_path), exist_ok=True)
+        joblib.dump(self.model, self.model_path)
+        joblib.dump(self.scaler, self.scaler_path)
+        print(f"Model saved to {self.model_path}")
+        print(f"Scaler saved to {self.scaler_path}")
         return self
     
-    @classmethod
-    def load_model(cls, model_path='iris_model.joblib', scaler_path='iris_scaler.joblib'):
+    def load_model(self):
         """
         Load a pre-trained model and scaler from disk
         """
-        model = joblib.load(model_path)
-        scaler = joblib.load(scaler_path)
-        
-        # Create a new instance and replace model and scaler
-        instance = cls()
-        instance.model = model
-        instance.scaler = scaler
-        return instance
+        if os.path.exists(self.model_path):
+            self.model = joblib.load(self.model_path)
+            self.scaler = joblib.load(self.scaler_path)
+        else:
+            raise FileNotFoundError("Model file not found")
+        return self
 
 # If script is run directly, train and save the model
 if __name__ == '__main__':

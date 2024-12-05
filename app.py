@@ -99,6 +99,15 @@ def get_species_info(species):
     return species_info.get(species.lower(), {'description': 'Unknown species', 'characteristics': [], 'wiki_link': '#'})
 
 def main():
+    # Initialize and train model if not exists
+    model = IrisClassificationModel()
+    try:
+        model.load_model()
+    except:
+        print("Training new model...")
+        model.train()
+        model.save_model()
+    
     st.title('Iris Flower Species Classifier ')
     
     # Sidebar for input
@@ -112,13 +121,6 @@ def main():
     
     # Prepare features for prediction
     features = [sepal_length, sepal_width, petal_length, petal_width]
-    
-    # Load pre-trained model
-    try:
-        model = IrisClassificationModel.load_model()
-    except FileNotFoundError:
-        st.error("Model not found. Please train the model first by running model.py")
-        return
     
     # Prediction button
     if st.sidebar.button('Predict Species'):
